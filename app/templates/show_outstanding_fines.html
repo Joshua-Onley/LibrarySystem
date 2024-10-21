@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% if outstanding_fines %}
+    <h1>Outstanding fines</h1>
+
+    <table class="loan-history">
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Student Firstname</th>
+                <th>Student Lastname</th>
+                <th>Student Fines</th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for student in outstanding_fines %}
+            <tr>
+                <td>{{ student.student_id }}</td>
+                <td>{{ student.firstname }}</td>
+                <td>{{ student.lastname }}</td>
+                <td>£ {{ student.fines }}</td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+    <h2>There are currently no outstanding fines</h2>
+    {% endif %}
+
+<style>
+    .loan-history {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .loan-history th,
+    .loan-history td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .loan-history th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+{% endblock %}

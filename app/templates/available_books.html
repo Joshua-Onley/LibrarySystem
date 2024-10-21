@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<table class="loan-history">
+{% if all_available_books %}
+<thead>
+<tr>
+    <th>Book ID</th>
+    <th>Title</th>
+    <th>Author</th>
+    <th>Genre</th>
+    <th>Number of pages</th>
+    <th>Copies Available</th>
+    <th>Loan Period</th>
+</tr>
+</thead>
+
+<tbody>
+{% for book in all_available_books %}
+<tr>
+    <td>{{ book.book_id }}</td>
+    <td>{{ book.book_title }}</td>
+    <td>{{ book.author_firstname }} {{ book.author_lastname }}</td>
+    <td>{{ book.genre }}</td>
+    <td>{{ book.number_of_pages }}</td>
+    <td>{{ book.quantity }}</td>
+    <td>{{ book.loan_period }} Seconds</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+    {% else %}
+    <h1>There are currently no available books</h1>
+    {% endif %}
+
+        <style>
+    .loan-history {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .loan-history th,
+    .loan-history td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .loan-history th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+{% endblock %}

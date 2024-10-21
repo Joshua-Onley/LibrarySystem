@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <form method="POST" action="" novalidate>
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.book_title.label }}<br/>{{ form.book_title(size=10) }}<br/>
+        {% for error in form.book_title.errors %}
+            <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+    </div>
+
+    <div>
+        {{ form.author_firstname.label }}<br/>{{ form.author_firstname(size=10) }}<br/>
+        {% for error in form.author_firstname.errors %}
+            <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+    </div>
+
+        <div>
+        {{ form.author_lastname.label }}<br/>{{ form.author_lastname(size=10) }}<br/>
+        {% for error in form.author_lastname.errors %}
+            <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+    </div>
+
+        <div>
+        {{ form.number_of_pages.label }}<br/>{{ form.number_of_pages(size=10) }}<br/>
+        {% for error in form.number_of_pages.errors %}
+            <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+    </div>
+
+
+    <div>{{ form.submit() }}</div>
+</form>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if all_active_loans %}
+    <table class="loan-history">
+    <thead>
+    <tr>
+        <th>Loan ID</th>
+        <th>Student ID</th>
+        <th>Device ID</th>
+        <th>Borrow Date & Time</th>
+        <th>Due Date & Time</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for loan in all_active_loans %}
+    <tr>
+        <td>{{ loan.loan_id }}</td>
+        <td>{{ loan.student_id }}</td>
+        <td>{{ loan.device_id }}</td>
+        <td>{{ loan.borrowdatetime }}</td>
+        <td>{{ loan.duedatetime }}</td>
+
+    </tr>
+    {% endfor %}
+    </tbody>
+
+
+    </table>
+
+        {% else %}
+    <h2>There are no active loans</h2>
+    {% endif %}
+
+    <style>
+    .loan-history {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .loan-history th,
+    .loan-history td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .loan-history th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+{% endblock %}

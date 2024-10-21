@@ -1,0 +1,56 @@
+
+
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if students %}
+    <table class="student-information">
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Username</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Active</th>
+                <th>Fines</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.student_id }}</td>
+                <td>{{ student.username }}</td>
+                <td>{{ student.firstname }}</td>
+                <td>{{ student.lastname }}</td>
+                <td>{{ student.email }}</td>
+                <td>{{ student.active }}</td>
+                <td>{{ student.fines }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No students found.</p>
+{% endif %}
+
+<style>
+.student-information {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.student-information th,
+.student-information td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.student-information th {
+    background-color: #f2f2f2;
+}
+</style>
+
+{% endblock %}

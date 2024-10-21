@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block content %}
+    <title>Student Loan History</title>
+
+        <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>Student Loan History</h1>
+
+<form method="POST" action="" novalidate>
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.student_id.label }}<br/>{{ form.student_id(size=30) }}<br/>
+        {% for error in form.student_id.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+
+    <div>{{ form.submit() }}</div>
+</form>
+
+    {% if student_loans %}
+        <table>
+        <h2>Devices Loaned</h2>
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Device ID</th>
+                    <th>Borrowed Date Time</th>
+                    <th>Due Date Time</th>
+                    <th>Return Date Time</th>
+                    <th>Fine</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for loan in student_loans %}
+                    <tr>
+                        <td>{{ loan.student_id }}</td>
+                        <td>{{ loan.device_id }}</td>
+                        <td>{{ loan.borrowdatetime }}</td>
+                        <td>{{ loan.duedatetime }}</td>
+                        <td>{{ loan.returndatetime }}</td>
+                        <td>£{{ loan.fine }}</td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    {% elif request.method=='POST' and not student_loans %}
+        <p>No device loan history found.</p>
+    {% endif %}
+
+    {% if student_book_loans %}
+        <table>
+        <h2>Books Loaned</h2>
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Book ID</th>
+                    <th>Borrowed Date Time</th>
+                    <th>Due Date Time</th>
+                    <th>Return Date Time</th>
+                    <th>Fine</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for loan in student_book_loans %}
+                    <tr>
+                        <td>{{ loan.student_id }}</td>
+                        <td>{{ loan.book_id }}</td>
+                        <td>{{ loan.borrowdatetime }}</td>
+                        <td>{{ loan.duedatetime }}</td>
+                        <td>{{ loan.returndatetime }}</td>
+                        <td>£{{ loan.fine_amount }}</td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    {% elif request.method=='POST' and not student_book_loans %}
+        <p>No book loan history found.</p>
+    {% endif %}
+
+</body>
+</html>
+
+{% endblock %}

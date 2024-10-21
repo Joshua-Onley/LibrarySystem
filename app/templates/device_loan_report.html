@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+
+    <title>Student Loan History</title>
+
+        <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>Device Loan History</h1>
+
+<form method="POST" action="" novalidate>
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.device_id.label }}<br/>{{ form.device_id(size=30) }}<br/>
+        {% for error in form.device_id.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+
+    <div>{{ form.submit() }}</div>
+</form>
+
+    {% if device_loans %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Device ID</th>
+                    <th>Student ID</th>
+                    <th>Borrowed Date Time</th>
+                    <th>Due Date Time</th>
+                    <th>Return Date Time</th>
+                    <th>Fine</th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for loan in device_loans %}
+                    <tr>
+                        <td>{{ loan.device_id }}</td>
+                        <td>{{ loan.student_id }}</td>
+                        <td>{{ loan.borrowdatetime }}</td>
+                        <td>{{ loan.duedatetime }}</td>
+                        <td>{{ loan.returndatetime }}</td>
+                        <td>{{ loan.fine }}</td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    {% else %}
+        <p>No loan history found.</p>
+    {% endif %}
+
+</body>
+
+
+{% endblock %}
+

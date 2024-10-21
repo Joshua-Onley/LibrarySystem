@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+<link rel="icon" href="{{ url_for('static', filename='uob_logo.png') }}">
+
+    {% if title %}
+    <title>{{ title }}</title>
+    {% else %}
+    <title>Library App</title>
+    {% endif %}
+</head>
+<body>
+<header class="site-header">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark ">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggle">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggle">
+                <div class="navbar-nav me-auto">
+                    <a class="nav-item nav-link" href="{{ url_for('index') }}">Home</a>
+
+                {% if current_user.is_authenticated %}
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Students
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ url_for('listStudents') }}">List Students</a>
+                            <a class="dropdown-item" href="{{ url_for('add_student') }}">Add Student</a>
+                            <a class="dropdown-item" href="{{ url_for('student_loan_report') }}">Student Loan History</a>
+                            <a class="dropdown-item" href="{{ url_for('search_students') }}">Search Student</a>
+                            <a class="dropdown-item" href="{{ url_for('deactivateStudent') }}">Deactivate Student</a>
+                            <a class="dropdown-item" href="{{ url_for('activate_student') }}">Activate Student</a>
+                            <a class="dropdown-item" href="{{ url_for('delete_student') }}">Delete Student</a>
+                             <a class="dropdown-item" href="{{ url_for('remove_student_loan_records') }}">Remove Student Loan Records</a>
+                        </div>
+                    </div>
+
+                    <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDevices" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Devices
+                    </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownDevices">
+                            <a class="dropdown-item" href="{{ url_for('see_available_devices') }}">See Available Devices</a>
+                            <a class="dropdown-item" href="{{ url_for('borrow') }}">Borrow Device</a>
+                            <a class="dropdown-item" href="{{ url_for('return_device') }}">Return Device</a>
+                            <a class="dropdown-item" href="{{ url_for('add_device') }}">Add Device</a>
+                            <a class="dropdown-item" href="{{ url_for('all_loans') }}">All Device Loan Records</a>
+                            <a class="dropdown-item" href="{{ url_for('active_loans') }}">Active Device Loans</a>
+                            <a class="dropdown-item" href="{{ url_for('device_loan_history') }}">Device Loan History</a>
+                        </div>
+                    </div>
+
+
+                    <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownFines" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Fines
+                    </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownFines">
+                            <a class="dropdown-item" href="{{ url_for('show_outstanding_fines') }}">See Outstanding Fines</a>
+                            <a class="dropdown-item" href="{{ url_for('pay_fine') }}">Pay Fine</a>
+                        </div>
+                    </div>
+
+
+                                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBooks" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Books
+                    </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownBooks">
+
+                            <a class="dropdown-item" href="{{ url_for('add_book') }}">Add Book</a>
+                            <a class="dropdown-item" href="{{ url_for('available_books') }}">Available Books</a>
+                            <a class="dropdown-item" href="{{ url_for('borrow_book') }}">Borrow Book</a>
+                            <a class="dropdown-item" href="{{ url_for('return_book') }}">Return Book</a>
+                            <a class="dropdown-item" href="{{ url_for('search_books') }}">Search Books</a>
+                            <a class="dropdown-item" href="{{ url_for('remove_book') }}">Remove Book</a>
+                            <a class="dropdown-item" href="{{ url_for('remove_book_loan_records') }}">Remove Book Loan Records</a>
+                            <a class="dropdown-item" href="{{ url_for('all_book_loan_records') }}">See All Book Loan Records</a>
+                        </div>
+                    </div>
+
+                                        <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDevices" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Testing
+                    </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownDevices">
+                            <a class="dropdown-item" href="{{ url_for('populate_books_db') }}">Populate Books Database (from books.txt file)</a>
+                    <a class="dropdown-item" href="{{ url_for('clear_tables') }}">Clear All Tables</a>
+
+                        </div>
+                    </div>
+
+
+                    {% endif %}
+                </div>
+            </div>
+
+
+                <div class="navbar-nav mr-auto">
+                    {% if current_user.is_anonymous %}
+                        <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
+                        <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+                    {% else %}
+                        <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout {{ current_user.username }}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main role="main" class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <div class="row">
+        <div class="col-sm-8">
+            {% block content %}{% endblock %}
+        </div>
+        <div class="col-sm-4">
+            <div class="content-section">
+                <h3>Important information</h3>
+                <p class='text-muted'>important information regarding loaning and fines.</p>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-light"><a href="{{ url_for('fine_information') }}">Fine Information</li>
+                    <li class="list-group-item list-group-item-light"><a href="{{ url_for('loan_information') }}">Borrowing Information</li>
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+</html>

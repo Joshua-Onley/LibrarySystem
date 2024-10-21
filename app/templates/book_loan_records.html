@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% if all_loans %}
+
+    <table class="loan-history">
+    <thead>
+    <tr>
+    <th>Loan ID</th>
+    <th>Student ID</th>
+    <th>Student Name</th>
+    <th>Book ID</th>
+    <th>Borrow Date</th>
+    <th>Due Date</th>
+    <th>Return Date</th>
+    <th>Fine</th>
+    </tr>
+    </thead>
+
+    <tbody>
+        {% for loan in all_loans %}
+    <tr>
+        <td>{{ loan.loan_id }}</td>
+        <td>{{ loan.student_id }}</td>
+        <td>{{ loan.student.firstname }} {{ loan.student.lastname }}</td>
+        <td>{{ loan.book_id }}</td>
+        <td>{{ loan.borrowdatetime }}</td>
+        <td>{{ loan.duedatetime }}</td>
+        <td>{{ loan.returndatetime }}</td>
+        <td>£{{ loan.fine_amount }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+
+        {% else %}
+        <h2>There are no loan records</h2>
+    {% endif %}
+        <style>
+    .loan-history {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .loan-history th,
+    .loan-history td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .loan-history th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+
+{% endblock %}

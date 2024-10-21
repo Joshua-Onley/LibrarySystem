@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form method="POST" action="" novalidate>
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.query.label }}<br/>{{ form.query(size=30) }}<br/>
+        {% for error in form.query.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+
+    <div>{{ form.submit() }}</div>
+</form>
+
+{% if search_results %}
+    <h2>Search Results for "{{ search_query }}"</h2>
+    <table class="student-information">
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Username</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Fines</th>
+                <th>Loans</th>
+                <th>Email</th>
+                <th>Active</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in search_results %}
+            <tr>
+                <td>{{ student.student_id }}</td>
+                <td>{{ student.username }}</td>
+                <td>{{ student.firstname }}</td>
+                <td>{{ student.lastname }}</td>
+                <td>{{ student.fines }}</td>
+                <td>
+                    {% if student.active_loans %}
+                        {% for loan in student.active_loans %}
+                            {{ loan.loan_id }}
+                        {% endfor %}
+                    {% else %}
+                        No active loans
+                    {% endif %}
+                </td>
+                <td>{{ student.email }}</td>
+                <td>{{ student.active }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% elif not search_results and request.method == 'POST' %}
+    <p>No results found.</p>
+{% endif %}
+
+<style>
+.student-information {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.student-information th,
+.student-information td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.student-information th {
+    background-color: #f2f2f2;
+}
+</style>
+
+{% endblock %}

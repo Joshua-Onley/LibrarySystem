@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% if device_table %}
+    <h1>Available devices</h1>
+
+    <table class="loan-history">
+        <thead>
+            <tr>
+                <th>Device ID</th>
+                <th>Device Name</th>
+                <th>Amount Available</th>
+                <th>Loan Period</th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for device in device_table %}
+            <tr>
+                <td>{{ device.device_id }}</td>
+                <td>{{ device.device_name }}</td>
+                <td>{{ device.device_quantity}}</td>
+                <td>{{ device.loan_period}} seconds</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+    <h2>There are currently no devices available</h2>
+    {% endif %}
+
+<style>
+    .loan-history {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .loan-history th,
+    .loan-history td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .loan-history th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+{% endblock %}
