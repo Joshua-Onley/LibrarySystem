@@ -16,8 +16,7 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    # Since we named our primary key "user_id", instead of "id", we have to override the
-    # get_id() from the UserMixin to return the id, and it has to be returned as a string
+    
     def get_id(self):
         return str(self.user_id)
 
